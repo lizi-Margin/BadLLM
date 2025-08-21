@@ -6,7 +6,7 @@ from clm_trainner import CLMTrainner, CLMLoRATrainner
 
 if __name__ == "__main__":
     json_path = "./llm-datasets/Erotic_Literature_Collection/all_shuffled_10k.json"
-    output_dir = "./llm-models/output/Qwen3-0.6B-Story"
+    output_dir = "./llm-models/output/Qwen3-0.6B-all_10k_2048"
     model_path = os.path.abspath("./llm-models/Qwen3-0.6B-Base")
     seq_length = 4096
     training_args = TrainingArguments(
