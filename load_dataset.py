@@ -14,8 +14,8 @@ def load_clm_dataset(json_path, tokenizer, max_length=None):
         def tokenize_fn(examples):
             return tokenizer(examples["text"], truncation=True)
     else:
+        print绿(f"use tokenizer max_length = {max_length}") 
         def tokenize_fn(examples):
-            print绿(f"use tokenizer max_length = {max_length}") 
             return tokenizer(examples["text"], truncation=True, max_length=max_length)
             # return tokenizer(examples["text"], truncation=True, max_length=512, padding="max_length")
     train_dataset = train_dataset.map(tokenize_fn, batched=True, batch_size=200, num_proc=N_CPU)

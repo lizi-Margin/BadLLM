@@ -12,15 +12,15 @@ if __name__ == "__main__":
     json_path = "./llm-datasets/Erotic_Literature_Collection/all_shuffled_10k.json"
     output_dir = "./llm-models/output/Qwen3-0.6B-Story"
     model_path = os.path.abspath("./llm-models/Qwen3-0.6B-Base")
-    seq_length = 4096
+    seq_length = 2048
     training_args = TrainingArguments(
         output_dir=output_dir,
         per_device_train_batch_size=2,
         gradient_accumulation_steps=8,
         num_train_epochs=3,
         learning_rate=2e-4,
-        # fp16=True,
-        bf16=True,
+        fp16=True,
+        # bf16=True,
 
         eval_strategy="steps",
         eval_steps=200,
