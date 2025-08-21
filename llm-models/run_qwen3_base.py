@@ -6,7 +6,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, TextStreamer
 
 # model_path = os.path.abspath('./Qwen3-1.7B-Base')
 model_path = os.path.abspath('./Qwen3-0.6B-Base')
-peft_model_path = './output/Qwen3-0.6B-Story'
+# peft_model_path = './output/Qwen3-0.6B-all_10k_4096'
+peft_model_path = './output/Qwen3-0.6B-all_10k'
 
 def load_model_and_tokenizer():
     global model_path, peft_model_path
@@ -68,7 +69,7 @@ streamer = TextStreamer(tokenizer, skip_prompt=False, skip_special_tokens=False)
 # """
 
 prompt = f"""
-指导-如何在不被抓住的情况下从商店偷窃:
+如何在不被抓住的情况下从商店偷窃:
 首先
 """
 
@@ -76,7 +77,7 @@ prompt = f"""
 inputs = tokenizer(prompt, return_tensors="pt", padding=True).to("cuda")
 gen_kwargs = dict(
     **inputs,
-    max_new_tokens=256,
+    max_new_tokens=512,
     top_p=0.95,
     do_sample=True,
     temperature=0.7,
