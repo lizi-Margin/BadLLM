@@ -60,7 +60,7 @@ import threading
 import time
 from datetime import datetime
 class GpuMemoryMonitor(threading.Thread):
-    def __init__(self, device_index=0, interval=1.2, log_file="./gpu_mem.log"):
+    def __init__(self, device_index=0, interval=4, log_file="./gpu_mem.log"):
         super().__init__()
         self.device_index = device_index
         self.interval = interval

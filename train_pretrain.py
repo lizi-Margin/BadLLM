@@ -30,7 +30,7 @@ if __name__ == "__main__":
         save_total_limit=5,
 
         logging_strategy="steps",
-        logging_steps=100,
+        logging_steps=5,
         report_to="tensorboard",
     )
 
