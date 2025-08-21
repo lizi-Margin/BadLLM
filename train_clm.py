@@ -1,9 +1,7 @@
-import torch, os
+import os
 from utils import backup_file
-from transformers import Trainer, TrainingArguments, DataCollatorForLanguageModeling
-from utils import load_model_with_lora
-from load_dataset import load_clm_dataset
-
+from transformers import TrainingArguments
+from clm_trainner import CLMTrainner, CLMLoRATrainner
 
 if __name__ == "__main__":
     json_path = "./llm-datasets/Erotic_Literature_Collection/all_shuffled_10k.json"
@@ -20,13 +18,13 @@ if __name__ == "__main__":
         bf16=True,
 
         eval_strategy="steps",
-        eval_steps=500,
+        eval_steps=200,
         metric_for_best_model="loss",
         greater_is_better=False,
         load_best_model_at_end=False,
 
         save_strategy="steps",
-        save_steps=500,
+        save_steps=200,
         save_total_limit=5,
 
         logging_strategy="steps",
@@ -37,24 +35,11 @@ if __name__ == "__main__":
 
 
     backup_file(__file__, output_dir)
-    tokenizer, model = load_model_with_lora(model_path)
-    train_dataset, eval_dataset = load_clm_dataset(json_path, tokenizer, max_length= seq_length)
-
-    # 4. DataCollator 自动做 causal LM 的 label shift
-    collator = DataCollatorForLanguageModeling(tokenizer, mlm=False)
-
-    trainer = Trainer(
-        model=model,
-        args=training_args,
-        train_dataset=train_dataset,
-        eval_dataset=eval_dataset,
-        # tokenizer=tokenizer,
-        processing_class=tokenizer,
-        data_collator=collator,
-        # max_seq_length=seq_length
+    trainer = CLMTrainner(
+        model_path=model_path,
+        json_path=json_path,
+        output_dir=output_dir,
+        seq_length=seq_length,
+        training_args=training_args,
     )
-
     trainer.train()
-
-    trainer.save_model(output_dir)
-    tokenizer.save_pretrained(output_dir)

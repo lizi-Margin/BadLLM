@@ -31,10 +31,11 @@ def load_model_with_lora(model_path, lora_config: LoraConfig = None):
     )
     print(model)
 
-    if lora_config:
+    use_lora = lora_config is not None
+    if use_lora:
         model = get_peft_model(model, lora_config)
         model.print_trainable_parameters()
         # model = model.half()
-    print绿(f"load model: {model_path}, lora_config: {lora_config}")
+    print绿(f"load model: {model_path}, use_lora={use_lora}")
     return tokenizer, model
 
