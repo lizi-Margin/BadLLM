@@ -10,19 +10,36 @@ def load_big_pretraining_trainset(file_list, tokenizer, max_length=2048, stride=
 
     dataset = load_dataset("json", data_files=file_list, streaming=True)
 
-    def tokenize_and_chunk(example):
-        input_ids = tokenizer(example["text"], truncation=False)["input_ids"]
-        chunks = []
-        start_index = 0
-        while start_index < len(input_ids):
-            end_index = min(start_index + window_size, len(input_ids))
-            chunks.append({"input_ids": input_ids[start_index:end_index]})
-            if end_index == len(input_ids):
-                break
-            start_index += stride
-        return chunks
+    # def tokenize_and_chunk(example):
+    #     input_ids = tokenizer(example["text"], truncation=False)["input_ids"]
+    #     chunks = []
+    #     start_index = 0
+    #     while start_index < len(input_ids):
+    #         end_index = min(start_index + window_size, len(input_ids))
+    #         # chunks.append({"input_ids": input_ids[start_index:end_index]})
+    #         chunks.append(input_ids[start_index:end_index])
+    #         if end_index == len(input_ids):
+    #             break
+    #         start_index += stride
+    #     # return chunks
+    #     return {"input_ids": chunks}
 
-    dataset = dataset["train"].map(tokenize_and_chunk, batched=False, num_proc=N_CPU)
+    def tokenize_and_chunk(examples):
+        all_input_ids = []
+        for text in examples["text"]:
+            input_ids = tokenizer(text, truncation=False)["input_ids"]
+            start_index = 0
+            while start_index < len(input_ids):
+                end_index = min(start_index + window_size, len(input_ids))
+                all_input_ids.append(input_ids[start_index:end_index])
+                if end_index == len(input_ids):
+                    break
+                start_index += stride
+        return {"input_ids": all_input_ids}
+
+    # dataset = dataset["train"].map(tokenize_and_chunk, batched=True)
+    # dataset = dataset["train"].map(tokenize_and_chunk, batched=False)
+    dataset = dataset["train"].map(tokenize_and_chunk, batched=True, remove_columns=["text"])
     return dataset, None
 
 

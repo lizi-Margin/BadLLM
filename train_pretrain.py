@@ -8,14 +8,15 @@ if __name__ == "__main__":
     # json_path = dataset_dir("./llm-datasets/text_pretrain")
     json_path = dataset_dir("/root/autodl-tmp/llm-datasets/text_pretrain")
     print(json_path)
-    output_dir = "./llm-models/output/Qwen3-0.6B-Story"
-    model_path = os.path.abspath("./llm-models/Qwen3-0.6B-Base")
+    output_dir = "./llm-models/output/BadLLM3-0.6B-Story"
+    model_path = os.path.abspath("./llm-models/Qwen3-0.6B-Init")
     seq_length = 1024
     training_args = TrainingArguments(
         output_dir=output_dir,
-        per_device_train_batch_size=2,
-        gradient_accumulation_steps=8,
-        num_train_epochs=12,
+        per_device_train_batch_size=14,
+        gradient_accumulation_steps=6,
+        # num_train_epochs=12,
+        max_steps=200_000, 
         learning_rate=1e-4,
         lr_scheduler_type="cosine",    # cosine decay
         warmup_ratio=0.03,     
@@ -25,11 +26,11 @@ if __name__ == "__main__":
         # eval_strategy=None,
     
         save_strategy="steps",
-        save_steps=800,
+        save_steps=1000,
         save_total_limit=5,
 
         logging_strategy="steps",
-        logging_steps=2,
+        logging_steps=100,
         report_to="tensorboard",
     )
 

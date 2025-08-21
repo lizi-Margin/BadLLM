@@ -1,5 +1,5 @@
 from transformers import Trainer, TrainingArguments, DataCollatorForLanguageModeling
-from utils import load_model_with_lora
+from utils import load_model_with_lora, GpuMemoryCallback, GpuMemoryMonitor
 from load_dataset import load_clm_dataset
 from trl import SFTTrainer
 from peft import LoraConfig
@@ -20,7 +20,8 @@ class Trainner():
 class CLMTrainner(Trainner):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.set("load_dataset_fn", load_clm_dataset)
+        if not "load_dataset_fn" in self.args:
+            self.set("load_dataset_fn", load_clm_dataset)
 
     def train(self):
         (model_path, json_path, output_dir, seq_length, training_args) = (
@@ -49,6 +50,7 @@ class CLMTrainner(Trainner):
                 processing_class=tokenizer,
                 data_collator=collator,
                 # max_seq_length=seq_length
+                # callbacks=[GpuMemoryCallback(device_index=0, every_n_steps=1)],
                 peft_config=None,  # 模型已经包装了 LoRA
             )
         else:
@@ -60,10 +62,15 @@ class CLMTrainner(Trainner):
                 # tokenizer=tokenizer,
                 processing_class=tokenizer,
                 data_collator=collator,
-                # max_seq_length=seq_length
+                # max_seq_length=seq_length,
+                # callbacks=[GpuMemoryCallback(device_index=0, every_n_steps=1)],
             )
+        
+        mem_monitor = GpuMemoryMonitor(device_index=0, log_file="./gpu_mem.log")
+        mem_monitor.start()
 
         trainer.train()
         trainer.save_model(output_dir)
         tokenizer.save_pretrained(output_dir)
+        mem_monitor.stop()
 

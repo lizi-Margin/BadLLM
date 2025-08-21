@@ -5,3 +5,5 @@ __pycache__
 
 /.vscode
 /.marscode
+/gpu_mem.log
+*.log
