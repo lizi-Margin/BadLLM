@@ -5,7 +5,8 @@ from clm_trainner import CLMTrainner
 from load_dataset import load_big_pretraining_trainset
 
 if __name__ == "__main__":
-    json_path = dataset_dir("./llm-datasets/text_pretrain")
+    # json_path = dataset_dir("./llm-datasets/text_pretrain")
+    json_path = dataset_dir("/root/autodl-fs/llm-datasets/text_pretrain")
     print(json_path)
     output_dir = "./llm-models/output/Qwen3-0.6B-Story"
     model_path = os.path.abspath("./llm-models/Qwen3-0.6B-Base")
