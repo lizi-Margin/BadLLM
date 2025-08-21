@@ -27,7 +27,7 @@ def load_model_with_lora(model_path, lora_config: LoraConfig = None):
         model_path,
         trust_remote_code=True,
         device_map="auto",
-        torch_dtype=torch.float16
+        # torch_dtype=torch.float16
     )
     print(model)
 

@@ -1,16 +1,18 @@
 from datasets import load_dataset
 
-def load_clm_dataset(json_path, tokenizer):
+def load_clm_dataset(json_path, tokenizer, max_length=None):
     dataset = load_dataset("json", data_files={"train": json_path})
     split_dataset = dataset["train"].train_test_split(test_size=0.03, seed=1)
     train_dataset = split_dataset["train"]
     eval_dataset = split_dataset["test"]
 
-    def tokenize_fn(examples):
-        # return tokenizer(examples["text"], truncation=True)
-        return tokenizer(examples["text"], truncation=True, max_length=2200)
-        # return tokenizer(examples["text"], truncation=True, max_length=1400)
-        # return tokenizer(examples["text"], truncation=True, max_length=512, padding="max_length")
+    if max_length is None:
+        def tokenize_fn(examples):
+            return tokenizer(examples["text"], truncation=True)
+    else:
+        def tokenize_fn(examples):
+            return tokenizer(examples["text"], truncation=True, max_length=max_length)
+            # return tokenizer(examples["text"], truncation=True, max_length=512, padding="max_length")
     train_dataset = train_dataset.map(tokenize_fn, batched=True, batch_size=200, num_proc=25)
     eval_dataset = eval_dataset.map(tokenize_fn, batched=True, batch_size=200, num_proc=25)
     train_dataset = train_dataset.remove_columns(["text"])
