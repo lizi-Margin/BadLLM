@@ -12,10 +12,10 @@ if __name__ == "__main__":
     json_path = "./llm-datasets/Erotic_Literature_Collection/all_shuffled_10k.json"
     output_dir = "./llm-models/output/Qwen3-0.6B-Story"
     model_path = os.path.abspath("./llm-models/Qwen3-0.6B-Base")
-    seq_length = 2200
+    seq_length = 4096
     training_args = TrainingArguments(
         output_dir=output_dir,
-        per_device_train_batch_size=1,
+        per_device_train_batch_size=2,
         gradient_accumulation_steps=8,
         num_train_epochs=3,
         learning_rate=2e-4,
@@ -63,11 +63,11 @@ if __name__ == "__main__":
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
         peft_config=None,  # 模型已经包装了 LoRA
-        tokenizer=tokenizer,
-        # processing_class=tokenizer,
+        # tokenizer=tokenizer,
+        processing_class=tokenizer,
         args=training_args,
         data_collator=collator,
-        max_seq_length=seq_length
+        # max_seq_length=seq_length
     )
 
     trainer.train()
