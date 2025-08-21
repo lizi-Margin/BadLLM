@@ -1,0 +1,165 @@
+{
+  "identity": {
+    "file_name": "identity.json"
+  },
+  "alpaca_en_demo": {
+    "file_name": "alpaca_en_demo.json"
+  },
+  "alpaca_zh_demo": {
+    "file_name": "alpaca_zh_demo.json"
+  },
+  "glaive_toolcall_en_demo": {
+    "file_name": "glaive_toolcall_en_demo.json",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "conversations",
+      "tools": "tools"
+    }
+  },
+  "glaive_toolcall_zh_demo": {
+    "file_name": "glaive_toolcall_zh_demo.json",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "conversations",
+      "tools": "tools"
+    }
+  },
+  "mllm_demo": {
+    "file_name": "mllm_demo.json",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages",
+      "images": "images"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant"
+    }
+  },
+  "mllm_audio_demo": {
+    "file_name": "mllm_audio_demo.json",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages",
+      "audios": "audios"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant"
+    }
+  },
+  "mllm_video_demo": {
+    "file_name": "mllm_video_demo.json",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages",
+      "videos": "videos"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant"
+    }
+  },
+  "mllm_video_audio_demo": {
+    "file_name": "mllm_video_audio_demo.json",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages",
+      "videos": "videos",
+      "audios": "audios"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant"
+    }
+  },
+  "MetaMathQA-395K_qwen_fmt": {
+    "file_name": "MetaMathQA/MetaMathQA-395K_qwen_fmt.json",
+    "formatting": "alpaca",
+    "ranking": false,
+    "columns": {
+      "prompt": "instruction",
+      "query": "input",
+      "response": "output",
+      "system": "system",
+      "history": null
+    }
+  },
+  "gsm8k_2000": {
+    "file_name": "gsm8k_2000/gsm8k_2000.json",
+    "formatting": "alpaca",
+    "ranking": false,
+    "columns": {
+      "prompt": "question",
+      "query": null,
+      "response": "rationale",
+      "system": null,
+      "history": null
+    }
+  },
+  "gsm8k_2000_complement": {
+    "file_name": "gsm8k_2000_complement/complement.json",
+    "formatting": "alpaca",
+    "ranking": false,
+    "columns": {
+      "prompt": "question",
+      "query": null,
+      "response": "answer",
+      "system": null,
+      "history": null
+    }
+  },
+    "gsm8k_2000_complement_fmt": {
+    "file_name": "gsm8k_2000_complement/complement_fmt.json",
+    "formatting": "alpaca",
+    "ranking": false,
+    "columns": {
+      "prompt": "question",
+      "query": null,
+      "response": "answer",
+      "system": null,
+      "history": null
+    }
+  },
+  "gsm8k_2000_complement_fmt_qwen": {
+    "file_name": "gsm8k_2000_complement/complement_fmt_qwen.json",
+    "formatting": "alpaca",
+    "columns": {
+      "prompt": "instruction",
+      "query": "input",
+      "response": "output",
+      "system": "system",
+      "history": null
+    }
+  },
+  "gsm8k_2000_socratic_complement_fmt_qwen": {
+    "file_name": "gsm8k_2000_complement/socratic_complement_fmt_qwen.json",
+    "formatting": "alpaca",
+    "columns": {
+      "prompt": "instruction",
+      "query": "input",
+      "response": "output",
+      "system": "system",
+      "history": null
+    }
+  },
+  "MetaMathQA_gsm8k": {
+    "file_name": "MetaMathQA_gsm8k/qwen_fmt.json",
+    "formatting": "alpaca",
+    "columns": {
+      "prompt": "instruction",
+      "query": "input",
+      "response": "output",
+      "system": "system",
+      "history": null
+    }
+  }
+}
