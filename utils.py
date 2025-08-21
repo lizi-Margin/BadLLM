@@ -39,3 +39,5 @@ def load_model_with_lora(model_path, lora_config: LoraConfig = None):
     print绿(f"load model: {model_path}, use_lora={use_lora}")
     return tokenizer, model
 
+def dataset_dir(json_path):
+    return [os.path.join(json_path, x) for x in os.listdir(json_path)]

@@ -1,11 +1,12 @@
 import os
-from utils import backup_file
+from utils import backup_file, dataset_dir
 from transformers import TrainingArguments
-from clm_trainner import CLMTrainner, CLMLoRATrainner
+from clm_trainner import CLMTrainner
+from load_dataset import load_big_pretraining_trainset
 
 if __name__ == "__main__":
-    json_path = "./llm-datasets/text/Erotic_Literature_Collection/all_shuffled_10k.json"
-    
+    json_path = dataset_dir("./llm-datasets/text_pretrain")
+    print(json_path)
     output_dir = "./llm-models/output/Qwen3-0.6B-Story"
     model_path = os.path.abspath("./llm-models/Qwen3-0.6B-Base")
     seq_length = 1024
@@ -18,12 +19,8 @@ if __name__ == "__main__":
         # fp16=True,
         bf16=True,
 
-        eval_strategy="steps",
-        eval_steps=200,
-        metric_for_best_model="loss",
-        greater_is_better=False,
-        load_best_model_at_end=False,
-
+        # eval_strategy=None,
+    
         save_strategy="steps",
         save_steps=200,
         save_total_limit=5,
@@ -42,5 +39,6 @@ if __name__ == "__main__":
         output_dir=output_dir,
         seq_length=seq_length,
         training_args=training_args,
+        load_dataset_fn=load_big_pretraining_trainset,
     )
     trainer.train()

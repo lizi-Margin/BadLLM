@@ -3,6 +3,29 @@ from uhtk.UTIL.colorful import *
 
 N_CPU = 32
 
+def load_big_pretraining_trainset(file_list, tokenizer, max_length=2048, stride=None):
+    window_size = max_length
+    if stride is None:
+        stride = window_size // 2  # 50% 重叠
+
+    dataset = load_dataset("json", data_files=file_list, streaming=True)
+
+    def tokenize_and_chunk(example):
+        input_ids = tokenizer(example["text"], truncation=False)["input_ids"]
+        chunks = []
+        start_index = 0
+        while start_index < len(input_ids):
+            end_index = min(start_index + window_size, len(input_ids))
+            chunks.append({"input_ids": input_ids[start_index:end_index]})
+            if end_index == len(input_ids):
+                break
+            start_index += stride
+        return chunks
+
+    dataset = dataset["train"].map(tokenize_and_chunk, batched=False, num_proc=N_CPU)
+    return dataset, None
+
+
 def load_clm_dataset(json_path, tokenizer, max_length=None):
     eos_token = tokenizer.eos_token
 

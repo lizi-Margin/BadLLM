@@ -2,10 +2,10 @@ import os
 from peft import LoraConfig
 from utils import backup_file
 from transformers import TrainingArguments
-from clm_trainner import CLMTrainner, CLMLoRATrainner
+from clm_trainner import CLMTrainner
 
 if __name__ == "__main__":
-    json_path = "./llm-datasets/Erotic_Literature_Collection/all_shuffled_10k.json"
+    json_path = "./llm-datasets/text/Erotic_Literature_Collection/all_shuffled_10k.json"
     output_dir = "./llm-models/output/Qwen3-0.6B-all_10k_512"
     model_path = os.path.abspath("./llm-models/Qwen3-0.6B-Base")
     seq_length = 512
@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
 
     backup_file(__file__, output_dir)
-    trainer = CLMLoRATrainner(
+    trainer = CLMTrainner(
         model_path=model_path,
         json_path=json_path,
         output_dir=output_dir,
