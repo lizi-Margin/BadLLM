@@ -15,15 +15,17 @@ if __name__ == "__main__":
         output_dir=output_dir,
         per_device_train_batch_size=2,
         gradient_accumulation_steps=8,
-        num_train_epochs=3,
-        learning_rate=2e-5,
+        num_train_epochs=12,
+        learning_rate=1e-4,
+        lr_scheduler_type="cosine",    # cosine decay
+        warmup_ratio=0.03,     
         # fp16=True,
         bf16=True,
 
         # eval_strategy=None,
     
         save_strategy="steps",
-        save_steps=200,
+        save_steps=800,
         save_total_limit=5,
 
         logging_strategy="steps",
