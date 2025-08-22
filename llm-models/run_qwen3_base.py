@@ -5,7 +5,8 @@ from threading import Thread
 from transformers import AutoModelForCausalLM, AutoTokenizer, TextStreamer
 
 # model_path = os.path.abspath('./Qwen3-1.7B-Base')
-model_path = os.path.abspath('./Qwen3-0.6B-Base')
+# model_path = os.path.abspath('./Qwen3-0.6B-Base')
+model_path = os.path.abspath('./output/BadLLM3-0.6B-Story/checkpoint-14000')
 # model_path = os.path.abspath('./Qwen3-0.6B-Init')
 # peft_model_path = './output/Qwen3-0.6B-all_10k_4096'
 # peft_model_path = './output/Qwen3-0.6B-all_10k'
@@ -76,15 +77,28 @@ prompt = f"""
 
 
 inputs = tokenizer(prompt, return_tensors="pt", padding=True).to("cuda")
+# gen_kwargs = dict(
+#     **inputs,
+#     max_new_tokens=512,
+#     top_p=0.95,
+#     do_sample=True,
+#     temperature=0.7,
+#     use_cache=True,
+#     streamer=streamer
+# )
+
 gen_kwargs = dict(
     **inputs,
     max_new_tokens=512,
-    top_p=0.95,
-    do_sample=True,
-    temperature=0.7,
+    top_p=0.9,                   # 稍微收紧 nucleus 采样，减少长尾概率触发重复
+    temperature=0.8,             # 稍微升高，增加多样性，避免陷入安全复读
+    repetition_penalty=1.2,      # ⭐ 惩罚重复 token
+    no_repeat_ngram_size=4,      # ⭐ 禁止 4-gram 重复
     use_cache=True,
+    do_sample=True,
     streamer=streamer
 )
+
 thread = Thread(target=model.generate, kwargs=gen_kwargs)
 thread.start()
 thread.join()
