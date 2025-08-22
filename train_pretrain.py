@@ -8,7 +8,7 @@ if __name__ == "__main__":
     # json_path = dataset_dir("./llm-datasets/text_pretrain")
     json_path = dataset_dir("/root/autodl-tmp/llm-datasets/text_pretrain")
     print(json_path)
-    output_dir = "./llm-models/output/BadLLM3-0.6B-Story"
+    output_dir = "./llm-models/output/BadLLM3-0.6B"
     model_path = os.path.abspath("./llm-models/Qwen3-0.6B-Init")
     seq_length = 1024
     training_args = TrainingArguments(
@@ -16,10 +16,11 @@ if __name__ == "__main__":
         per_device_train_batch_size=14,
         gradient_accumulation_steps=6,
         # num_train_epochs=12,
-        max_steps=200_000, 
-        learning_rate=1e-4,
-        lr_scheduler_type="cosine",    # cosine decay
-        warmup_ratio=0.03,     
+        max_steps=100_000, 
+        learning_rate=5e-5,
+        # lr_scheduler_type="cosine",
+        lr_scheduler_type="linear",
+        warmup_ratio=0.01,     
         # fp16=True,
         bf16=True,
 

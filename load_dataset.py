@@ -40,6 +40,8 @@ def load_big_pretraining_trainset(file_list, tokenizer, max_length=2048, stride=
     # dataset = dataset["train"].map(tokenize_and_chunk, batched=True)
     # dataset = dataset["train"].map(tokenize_and_chunk, batched=False)
     dataset = dataset["train"].map(tokenize_and_chunk, batched=True, remove_columns=["text"])
+
+    dataset = dataset.shuffle(buffer_size=10000, seed=1)
     return dataset, None
 
 

@@ -1,4 +1,4 @@
-import os, torch
+import os, torch, random
 from uhtk.UTIL.colorful import *
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import LoraConfig, get_peft_model
@@ -40,7 +40,9 @@ def load_model_with_lora(model_path, lora_config: LoraConfig = None):
     return tokenizer, model
 
 def dataset_dir(json_path):
-    return [os.path.join(json_path, x) for x in os.listdir(json_path)]
+    all_files = [os.path.join(json_path, x) for x in os.listdir(json_path)]
+    random.shuffle(all_files)
+    return all_files
 
 
 import torch
