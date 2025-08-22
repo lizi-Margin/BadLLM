@@ -90,10 +90,10 @@ inputs = tokenizer(prompt, return_tensors="pt", padding=True).to("cuda")
 gen_kwargs = dict(
     **inputs,
     max_new_tokens=512,
-    top_p=0.9,                   # 稍微收紧 nucleus 采样，减少长尾概率触发重复
-    temperature=0.8,             # 稍微升高，增加多样性，避免陷入安全复读
-    repetition_penalty=1.2,      # ⭐ 惩罚重复 token
-    no_repeat_ngram_size=4,      # ⭐ 禁止 4-gram 重复
+    top_p=0.9, 
+    temperature=0.8, 
+    repetition_penalty=1.2,
+    no_repeat_ngram_size=4,
     use_cache=True,
     do_sample=True,
     streamer=streamer
