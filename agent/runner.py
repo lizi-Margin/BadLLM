@@ -75,13 +75,13 @@ class Runner(object):
             user_input = input("You> ").strip()
             self.add_user(user_input)
         
-        @func_timeout.func_set_timeout(timeout)
-        def wait():
-            return input()
-        try:
-            user_input = wait()
-            self.add_user(user_input)
-        except: pass
+        # @func_timeout.func_set_timeout(timeout)
+        # def wait():
+        #     return input()
+        # try:
+        #     user_input = wait()
+        #     self.add_user(user_input)
+        # except: pass
     
     def handle_cmds(self, assistant_text):
         cmds = extract_commands_from_text(assistant_text)
