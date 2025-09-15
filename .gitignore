@@ -6,7 +6,7 @@ __pycache__
 /.vscode
 /.marscode
 /gpu_mem.log
-*.log
+# *.log
 
 
 tmp.bash.sh
