@@ -1,8 +1,8 @@
 import os
 from peft import LoraConfig
-from utils import backup_file
+from train.utils import backup_file
 from transformers import TrainingArguments
-from clm_trainner import CLMTrainner
+from train.clm_trainner import CLMTrainner
 
 if __name__ == "__main__":
     json_path = "./llm-datasets/text/Erotic_Literature_Collection/all_shuffled_10k.json"

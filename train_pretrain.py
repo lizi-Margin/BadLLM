@@ -1,8 +1,8 @@
 import os
-from utils import backup_file, dataset_dir
+from train.utils import backup_file, dataset_dir
 from transformers import TrainingArguments
-from clm_trainner import CLMTrainner
-from load_dataset import load_big_pretraining_trainset
+from train.clm_trainner import CLMTrainner
+from train.load_dataset import load_big_pretraining_trainset
 
 if __name__ == "__main__":
     # json_path = dataset_dir("./llm-datasets/text_pretrain")

@@ -1,6 +1,6 @@
 from transformers import Trainer, TrainingArguments, DataCollatorForLanguageModeling
-from utils import load_model_with_lora, GpuMemoryCallback, GpuMemoryMonitor
-from load_dataset import load_clm_dataset
+from .utils import load_model_with_lora, GpuMemoryCallback, GpuMemoryMonitor
+from .load_dataset import load_clm_dataset
 from trl import SFTTrainer
 from peft import LoraConfig
 from uhtk.UTIL.colorful import *

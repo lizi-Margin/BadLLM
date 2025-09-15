@@ -1,0 +1,2 @@
+try to build up a pseudo file system structure (linux fs) in ./linux_fs/. After you finished your job, prove it to me.
+Discover this folder (./), and explain what it is with me.

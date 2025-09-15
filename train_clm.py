@@ -1,7 +1,7 @@
 import os
-from utils import backup_file
+from train.utils import backup_file
 from transformers import TrainingArguments
-from clm_trainner import CLMTrainner, CLMLoRATrainner
+from train.clm_trainner import CLMTrainner, CLMLoRATrainner
 
 if __name__ == "__main__":
     json_path = "./llm-datasets/text/Erotic_Literature_Collection/all_shuffled_10k.json"
