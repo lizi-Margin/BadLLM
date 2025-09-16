@@ -1,5 +1,5 @@
 import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM, TextStreamer
 # -------------------------
 # 模型交互封装
 # -------------------------
@@ -14,8 +14,10 @@ class Model:
             trust_remote_code=True,
         ).to(self.device)
 
-    def generate_once(self, context, **gen_kwargs) -> str:
-        if not hasattr(self.tokenizer, "apply_chat_template"): raise AttributeError("apply_chat_template not found")
+    def generate_once(self, context, stream_print: bool = False, **gen_kwargs) -> str:
+        if not hasattr(self.tokenizer, "apply_chat_template"): 
+            raise AttributeError("apply_chat_template not found")
+        
         inputs = self.tokenizer.apply_chat_template(
             context,
             add_generation_prompt=True,
@@ -23,13 +25,19 @@ class Model:
             enable_thinking=False # Switches between thinking and non-thinking modes. Default is True. (thinking does not work)
         )
         prompt_len = inputs.shape[1]
-        # streamer = TextStreamer(tokenizer, skip_prompt=False, skip_special_tokens=False)
+
+        streamer = None
+        if stream_print:
+            # TextStreamer 会边生成边 decode 打印
+            streamer = TextStreamer(self.tokenizer, skip_prompt=True, skip_special_tokens=True)
 
         with torch.no_grad():
             out = self.model.generate(
                 inputs.to(self.device),
+                streamer=streamer,  # 如果为 None 就不会实时打印
                 **gen_kwargs
             )
-        # 只解码新生成的部分
+
+        # 如果开启了 streamer，generate 已经在打印了，但还是要返回完整结果
         generated = self.tokenizer.decode(out[0][prompt_len:], skip_special_tokens=True)
         return generated

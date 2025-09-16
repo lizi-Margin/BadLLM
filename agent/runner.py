@@ -53,22 +53,28 @@ class Runner(object):
 
     def add_assistant(self, text: str):
         self.chat_history.append({"role": "assistant", "content": text})
+    
+    def auto_restart(self):
+        self.chat_history = self.chat_history[:2]
         
-    def run(self):
+    def run(self, max_turn=None):
         # show the system prompt
         print绿(self.chat_history[0])
-
-        try:
+        
+        if max_turn is None:
             while True:
-                self.handle_user_input()
-                assistant_text = self.agent.generate_once(self.chat_history, **self.gen_kwargs)
-                self.add_assistant(assistant_text)
-                print("\nModel> ")
-                print(assistant_text)
-                self.handle_cmds(assistant_text)
-
-        except KeyboardInterrupt:
-            print("\n用户中断，退出。")
+                self.one_turn()
+        else:
+            for _ in range(max_turn):
+                self.one_turn()
+        
+    
+    def one_turn(self):
+        self.handle_user_input()
+        print("\nModel> ")
+        assistant_text = self.agent.generate_once(self.chat_history, stream_print=True, **self.gen_kwargs)
+        self.add_assistant(assistant_text)
+        self.handle_cmds(assistant_text)
     
     def handle_user_input(self, timeout=5):
         if len(self.chat_history) == 1: # first round chat
@@ -118,8 +124,8 @@ class Runner(object):
             result_summary = (
                 f"Command: {cmd}\nReturn code: {rc}\n--- STDOUT ---\n{out}\n--- STDERR ---\n{err}\nTimestamp: {tstamp}"
             )
-            print("=== Command result start ===")
-            print(result_summary)
-            print("=== Command result end ===")
+            print黄("=== Command result start ===")
+            print黄(result_summary)
+            print黄("=== Command result end ===")
             # 将执行结果作为一条 user 消息反馈给模型（或 assistant，视需求而定）
             self.add_user(f"[shell output]\n{result_summary}")

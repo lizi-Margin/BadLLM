@@ -20,4 +20,10 @@ gen_kwargs = dict(
 
 if __name__ == "__main__":
     runner = Runner(path=model_path, gen_kwargs=gen_kwargs)
-    runner.run()
+
+    try:
+        while True:
+            runner.run(max_turn=4)
+            runner.auto_restart()
+    except KeyboardInterrupt:
+        print("\n用户中断，退出。")
