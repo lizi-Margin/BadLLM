@@ -25,6 +25,6 @@ if __name__ == "__main__":
         while True:
             runner.run(max_turn=4)
             runner.auto_restart()
-            time.sleep(5)
+            time.sleep(30)
     except KeyboardInterrupt:
         print("\n用户中断，退出。")
