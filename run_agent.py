@@ -1,4 +1,4 @@
-import os
+import os, time
 from agent.runner import Runner
 
 # model_path = os.path.abspath('./llm-models/DAN-Qwen3-1.7B/')
@@ -25,5 +25,6 @@ if __name__ == "__main__":
         while True:
             runner.run(max_turn=4)
             runner.auto_restart()
+            time.sleep(5)
     except KeyboardInterrupt:
         print("\n用户中断，退出。")
