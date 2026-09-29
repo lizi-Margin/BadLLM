@@ -6,7 +6,25 @@ __pycache__
 /.vscode
 /.marscode
 /gpu_mem.log
-# *.log
+*.log
 
 
 tmp.bash.sh
+
+# WSL-side workspace: model weights, training runs, smoke-test outputs, caches.
+/wsl/
+
+# Model weights, checkpoints, and dataset archives.
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+*.gguf
+*.7z
+
+# Downloaded pretraining corpora, progress, and local data tooling environment.
+/data/pretrain/
+/.venv-data/
+/.artifacts/
+/third_party/
+/outputs/
