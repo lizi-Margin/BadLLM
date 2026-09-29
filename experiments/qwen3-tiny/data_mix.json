@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "status": "selected_raw_shards_downloaded_and_sha256_verified_not_cleaned_or_token_counted",
+  "verified_on": "2026-09-20",
+  "weight_unit": "tokens_counted_with_the_pinned_qwen_tokenizer",
+  "seed": 42,
+  "budgets": {
+    "pipeline_smoke": 10000000,
+    "pilot": 100000000,
+    "first_base": 3000000000,
+    "extended_base": 10000000000
+  },
+  "sources": [
+    {
+      "name": "ultrafineweb_zh",
+      "repo_id": "OpenBMB/Ultra-FineWeb",
+      "revision": "02c85641e3d19a854be2e09139c25adaa9518063",
+      "config": "default",
+      "split": "zh",
+      "text_column": "content",
+      "data_files": "data/ultrafineweb_zh/*.parquet",
+      "token_weight": 0.4,
+      "language": "zh",
+      "license_note": "Repository declares Apache-2.0; dataset card also requires checking upstream dataset licenses.",
+      "verification": "At least one pinned-revision local Parquet shard verified against official SHA-256 and read with PyArrow; 32 text rows sampled on 2026-09-20. Full selected download and token counting are separate stages."
+    },
+    {
+      "name": "fineweb_edu_dedup",
+      "repo_id": "HuggingFaceTB/smollm-corpus",
+      "revision": "3ba9d605774198c5868892d7a8deda78031a781f",
+      "config": "fineweb-edu-dedup",
+      "split": "train",
+      "text_column": "text",
+      "token_weight": 0.35,
+      "language": "en",
+      "license_note": "ODC-By; retain source attribution and metadata.",
+      "verification": "At least one pinned-revision local Parquet shard verified against official SHA-256 and read with PyArrow; 32 text rows sampled on 2026-09-20. Full selected download and token counting are separate stages."
+    },
+    {
+      "name": "cosmopedia_v2",
+      "repo_id": "HuggingFaceTB/smollm-corpus",
+      "revision": "3ba9d605774198c5868892d7a8deda78031a781f",
+      "config": "cosmopedia-v2",
+      "split": "train",
+      "text_column": "text",
+      "token_weight": 0.15,
+      "language": "en",
+      "license_note": "SmolLM-Corpus card declares ODC-By; retain synthetic-data provenance.",
+      "verification": "At least one pinned-revision local Parquet shard verified against official SHA-256 and read with PyArrow; 32 text rows sampled on 2026-09-20. Full selected download and token counting are separate stages."
+    },
+    {
+      "name": "finewiki_zh",
+      "repo_id": "HuggingFaceFW/finewiki",
+      "revision": "8bd13e72e6a002407649b3e898535f42ceb1aeb9",
+      "config": "zh",
+      "split": "train",
+      "text_column": "text",
+      "token_weight": 0.05,
+      "language": "zh",
+      "license_note": "CC-BY-SA-4.0 / GFDL as declared in the dataset card; retain article attribution.",
+      "verification": "At least one pinned-revision local Parquet shard verified against official SHA-256 and read with PyArrow; 32 text rows sampled on 2026-09-20. Full selected download and token counting are separate stages."
+    },
+    {
+      "name": "finemath_4plus",
+      "repo_id": "HuggingFaceTB/finemath",
+      "revision": "e92b25a616738fe95dc186b64dfb19f9c8525594",
+      "config": "finemath-4plus",
+      "split": "train",
+      "text_column": "text",
+      "token_weight": 0.05,
+      "language": "en",
+      "license_note": "ODC-By plus Common Crawl terms as documented upstream.",
+      "verification": "At least one pinned-revision local Parquet shard verified against official SHA-256 and read with PyArrow; 32 text rows sampled on 2026-09-20. Full selected download and token counting are separate stages."
+    }
+  ],
+  "requirements_for_materialization": [
+    "Use streaming or selected parquet shards; do not download entire repositories.",
+    "Count tokens locally; upstream token counts use different tokenizers.",
+    "Keep source/revision/document hash/URL in provenance sidecars.",
+    "Deduplicate globally before splitting; hold out document groups before packing.",
+    "Remove benchmark overlaps before training, including SFT and RL test prompts.",
+    "Shuffle across shards; never assume the first N rows are representative.",
+    "Stop on source exhaustion and report it; never silently repeat data.",
+    "Write independent held-out data outside the training token budget.",
+    "Publish actual post-filter token counts and achieved source proportions."
+  ],
+  "download_batch": {
+    "files": 37,
+    "bytes": 45099691675,
+    "plan": "data/pretrain/download_plan.json",
+    "progress": "data/pretrain/progress.json"
+  }
+}

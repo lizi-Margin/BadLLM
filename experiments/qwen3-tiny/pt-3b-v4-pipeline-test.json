@@ -1,0 +1,9 @@
+{
+  "model": "wsl/runs/qwen3-tiny/pt-full-50gb",
+  "dataset": "data/pretrain/prepared/pt-3b-v4-test",
+  "output": "wsl/runs/qwen3-tiny/pt-3b-v4-pipeline-test",
+  "batch_size": 32,
+  "gradient_accumulation_steps": 1,
+  "learning_rate": 0.0001,
+  "seed": 42
+}

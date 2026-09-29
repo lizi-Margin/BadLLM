@@ -1,0 +1,20 @@
+{
+  "schema_version": 5,
+  "status": "3b_reasoning_facts_code_mix",
+  "seed": 42,
+  "tokenizer": "wsl/runs/qwen3-tiny/pt-full-50gb",
+  "total_train_tokens": 3000000000,
+  "validation_fraction": 0.001,
+  "sources": [
+    {"name":"finewiki_zh","repo_id":"HuggingFaceFW/finewiki","revision":"main","remote_prefix":"data/zhwiki","tokens":450000000,"weight":0.15,"text_column":"text"},
+    {"name":"ultrafineweb_l3_zh_qa","repo_id":"openbmb/Ultra-FineWeb-L3","revision":"main","remote_prefix":"data/ultrafineweb_zh_l3/qa","tokens":300000000,"weight":0.10,"text_column":"content"},
+    {"name":"fineweb_edu_dedup","local_source":"fineweb_edu_dedup","tokens":300000000,"weight":0.10,"text_column":"text"},
+    {"name":"finewiki_en","repo_id":"HuggingFaceFW/finewiki","revision":"main","remote_prefix":"data/enwiki","tokens":150000000,"weight":0.05,"text_column":"text"},
+    {"name":"ultradata_math_l2","repo_id":"openbmb/UltraData-Math","revision":"main","remote_prefix":"data/UltraData-Math-L2-preview","tokens":450000000,"weight":0.15,"text_column":"content"},
+    {"name":"ultradata_math_l3","repo_id":"openbmb/UltraData-Math","revision":"main","remote_prefix":"data/UltraData-Math-L3/Textbook-Exercise-Synthetic","tokens":450000000,"weight":0.15,"text_column":"content"},
+    {"name":"ultradata_code_l2","repo_id":"openbmb/UltraData-Code","revision":"main","remote_prefix":"data/UltraData-Code-L2","tokens":450000000,"weight":0.15,"text_column":"content","languages":{"py":0.5,"cpp":0.25,"java":0.1,"js":0.1,"go":0.05}},
+    {"name":"ultradata_code_l3","repo_id":"openbmb/UltraData-Code","revision":"main","remote_prefix":"data/UltraData-Code-L3","tokens":300000000,"weight":0.10,"text_column":"full_content","languages":{"py":0.5,"cpp":0.25,"java":0.1,"js":0.1,"go":0.05}},
+    {"name":"ultrafineweb_zh_fresh","local_source":"ultrafineweb_zh","tokens":150000000,"weight":0.05,"text_column":"content"}
+  ],
+  "format_version":"quota-v5"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "/mnt/d/BadLLM/wsl/runs/qwen3-tiny/pt-3b-v4-from-pt50gb-224465",
+  "dataset": "data/pretrain/prepared/pt-3b-v5-reasoning",
+  "output": "wsl/runs/qwen3-tiny/pt-3b-v5-after-v4",
+  "batch_size": 32,
+  "gradient_accumulation_steps": 1,
+  "learning_rate": 0.0001,
+  "seed": 42
+}

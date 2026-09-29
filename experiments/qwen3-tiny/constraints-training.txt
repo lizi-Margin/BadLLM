@@ -1,0 +1,14 @@
+# Common compatibility baseline for the two isolated micromamba environments.
+torch==2.8.0
+torchvision==0.23.0
+torchaudio==2.8.0
+transformers==4.57.1
+datasets==4.0.0
+accelerate==1.11.0
+peft==0.17.1
+torchdata==0.11.0
+numpy==1.26.4
+ray==2.49.2
+tensordict==0.10.0
+opencv-python-headless==4.11.0.86
+setuptools==79.0.1

@@ -1,0 +1,107 @@
+{
+  "schema_version": 3,
+  "status": "3b_token_continuation_mix",
+  "seed": 42,
+  "tokenizer": "wsl/runs/qwen3-tiny/pt-full-50gb",
+  "total_train_tokens": 3000000000,
+  "validation_fraction": 0.001,
+  "sources": [
+    {
+      "name": "ultrafineweb_zh_replay",
+      "local_source": "ultrafineweb_zh",
+      "tokens": 600000000,
+      "weight": 0.2,
+      "text_column": "content"
+    },
+    {
+      "name": "ultrafineweb_l3_zh_qa",
+      "repo_id": "openbmb/Ultra-FineWeb-L3",
+      "revision": "main",
+      "remote_prefix": "data/ultrafineweb_zh_l3/qa",
+      "tokens": 300000000,
+      "weight": 0.1,
+      "text_column": "content"
+    },
+    {
+      "name": "ultrafineweb_l3_zh_multistyle",
+      "repo_id": "openbmb/Ultra-FineWeb-L3",
+      "revision": "main",
+      "remote_prefix": "data/ultrafineweb_zh_l3/multi_style",
+      "tokens": 300000000,
+      "weight": 0.1,
+      "text_column": "content"
+    },
+    {
+      "name": "finewiki_zh",
+      "local_source": "finewiki_zh",
+      "tokens": 450000000,
+      "weight": 0.15,
+      "text_column": "text"
+    },
+    {
+      "name": "ultradata_math_l2",
+      "repo_id": "openbmb/UltraData-Math",
+      "revision": "main",
+      "remote_prefix": "data/UltraData-Math-L2-preview",
+      "tokens": 300000000,
+      "weight": 0.1,
+      "text_column": "content"
+    },
+    {
+      "name": "ultradata_math_l3",
+      "repo_id": "openbmb/UltraData-Math",
+      "revision": "main",
+      "remote_prefix": "data/UltraData-Math-L3/Textbook-Exercise-Synthetic",
+      "tokens": 150000000,
+      "weight": 0.05,
+      "text_column": "content"
+    },
+    {
+      "name": "fineweb_edu_dedup",
+      "local_source": "fineweb_edu_dedup",
+      "tokens": 450000000,
+      "weight": 0.15,
+      "text_column": "text"
+    },
+    {
+      "name": "ultradata_code_l2",
+      "repo_id": "openbmb/UltraData-Code",
+      "revision": "main",
+      "remote_prefix": "data/UltraData-Code-L2",
+      "tokens": 200000000,
+      "weight": 0.0666666667,
+      "text_column": "content",
+      "languages": {
+        "py": 0.5,
+        "cpp": 0.25,
+        "java": 0.1,
+        "js": 0.1,
+        "go": 0.05
+      }
+    },
+    {
+      "name": "ultradata_code_l3",
+      "repo_id": "openbmb/UltraData-Code",
+      "revision": "main",
+      "remote_prefix": "data/UltraData-Code-L3",
+      "tokens": 100000000,
+      "weight": 0.0333333333,
+      "text_column": "full_content",
+      "languages": {
+        "py": 0.5,
+        "cpp": 0.25,
+        "java": 0.1,
+        "js": 0.1,
+        "go": 0.05
+      }
+    },
+    {
+      "name": "cosmopedia_v2",
+      "local_source": "cosmopedia_v2",
+      "tokens": 150000000,
+      "weight": 0.05,
+      "text_column": "text"
+    }
+  ],
+  "format_version": "quota-v4"
+}

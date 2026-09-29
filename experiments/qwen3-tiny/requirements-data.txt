@@ -1,0 +1,2 @@
+# Native Windows Parquet inspection; the downloader itself uses only stdlib.
+pyarrow==25.0.1

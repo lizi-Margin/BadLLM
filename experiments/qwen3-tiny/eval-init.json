@@ -1,0 +1,43 @@
+{
+  "fineweb_edu_dedup": {
+    "nll": 432402.86389923096,
+    "tokens": 35953,
+    "documents": 66,
+    "loss": 12.02689244010878,
+    "perplexity": 167191.04843122765
+  },
+  "ultrafineweb_zh": {
+    "nll": 989122.0053710938,
+    "tokens": 82217,
+    "documents": 102,
+    "loss": 12.030626334834569,
+    "perplexity": 167816.48914339623
+  },
+  "cosmopedia_v2": {
+    "nll": 183778.12109375,
+    "tokens": 15257,
+    "documents": 27,
+    "loss": 12.045495254227568,
+    "perplexity": 170330.3821141423
+  },
+  "finewiki_zh": {
+    "nll": 61224.12854003906,
+    "tokens": 5086,
+    "documents": 9,
+    "loss": 12.037775961470519,
+    "perplexity": 169020.61377561762
+  },
+  "finemath_4plus": {
+    "nll": 67113.51867675781,
+    "tokens": 5602,
+    "documents": 8,
+    "loss": 11.980278235765407,
+    "perplexity": 159576.42431554286
+  },
+  "overall": {
+    "nll": 1733640.6375808716,
+    "tokens": 144115,
+    "loss": 12.02956415071902,
+    "perplexity": 167638.33176901782
+  }
+}

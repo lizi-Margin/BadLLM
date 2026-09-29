@@ -1,0 +1,9 @@
+{
+  "model": "wsl/runs/qwen3-tiny/pt-3b-v4-from-pt50gb-224465/initial_model_pt-full-50gb_224465",
+  "dataset": "data/pretrain/prepared/pt-3b-v4",
+  "output": "wsl/runs/qwen3-tiny/pt-3b-v4-from-pt50gb-224465",
+  "batch_size": 32,
+  "gradient_accumulation_steps": 1,
+  "learning_rate": 0.0001,
+  "seed": 42
+}
