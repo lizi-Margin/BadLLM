@@ -135,6 +135,57 @@ def apply() -> None:
             initial_seed=torch.musa.initial_seed,
         )
 
+    # 7) transformers' TrainingArguments gates bf16 training on
+    #    is_torch_bf16_gpu_available(), which only knows cuda/xpu/hpu/npu and
+    #    therefore rejects torch_musa setups ("Your setup doesn't support
+    #    bf16/gpu"). Wrap it so a MUSA device reports bf16 support (verified
+    #    in fwd/bwd on the MTT S4000); already-imported binding sites are
+    #    rebound, later imports pick up the wrapped version from import_utils.
+    try:
+        import transformers.utils.import_utils as _tu
+    except ImportError:
+        _tu = None
+    if _tu is not None:
+        _orig_bf16_gate = getattr(_tu, "is_torch_bf16_gpu_available", None)
+        if _orig_bf16_gate is not None and not getattr(_orig_bf16_gate, "_musa_bf16_gate", False):
+            def _bf16_gate(*args, **kwargs):
+                if torch.musa.is_available():
+                    return True
+                return _orig_bf16_gate(*args, **kwargs)
+
+            _bf16_gate._musa_bf16_gate = True
+            _tu.is_torch_bf16_gpu_available = _bf16_gate
+            for module in list(sys.modules.values()):
+                try:
+                    if getattr(module, "is_torch_bf16_gpu_available", None) is _orig_bf16_gate:
+                        module.is_torch_bf16_gpu_available = _bf16_gate
+                except Exception:  # noqa: BLE001
+                    pass
+
+    # 8) transformers >= 4.56 assumes torch >= 2.5 in two save-path spots:
+    #    a module-level ``from torch.distributed.tensor import DTensor`` and
+    #    function-level re-imports. Neither API exists in the frozen torch
+    #    2.2.0 MUSA build. DTensor is only used for isinstance checks, so a
+    #    dummy class that no real tensor inherits from is safe.
+    try:
+        import torch.distributed.tensor as _tdt
+
+        if not hasattr(_tdt, "DTensor"):
+            class _DTensor:  # never instantiated; single-device runs hold no real DTensors
+                pass
+
+            _tdt.DTensor = _DTensor
+
+        # modeling_utils guards its module-level DTensor import with
+        # ``is_torch_greater_or_equal("2.5")`` (False here) but later references
+        # the bare name in save_pretrained; bind it explicitly.
+        import transformers.modeling_utils as _mu
+
+        if not hasattr(_mu, "DTensor"):
+            _mu.DTensor = _tdt.DTensor
+    except Exception:  # noqa: BLE001
+        pass
+
 
 def patch_transformers_torch_load_gate() -> bool:
     """Lift transformers' torch<2.6 ``torch.load`` gate (CVE-2025-32434 guard).
@@ -172,3 +223,4 @@ def patch_transformers_torch_load_gate() -> bool:
 
 
 apply()
+patch_transformers_torch_load_gate()
