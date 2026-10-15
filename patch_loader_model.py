@@ -1,9 +1,13 @@
-﻿from pathlib import Path
-p=Path('/mnt/d/BadLLM/wsl/vendor/LLaMA-Factory/src/llamafactory/model/loader.py')
-s=p.read_text()
-old='''    if model_args.print_param_status and int(os.getenv("LOCAL_RANK", "0")) == 0:
+from pathlib import Path
+import sys
+
+# Usage: python patch_loader_model.py [LLaMA-Factory repo root]
+root = Path(sys.argv[1]) if len(sys.argv) > 1 else Path('/mnt/d/BadLLM/wsl/vendor/LLaMA-Factory')
+p = root / 'src/llamafactory/model/loader.py'
+s = p.read_text()
+old = '''    if model_args.print_param_status and int(os.getenv("LOCAL_RANK", "0")) == 0:
 '''
-new='''    # A checkpoint loaded with a one-entry device map can retain
+new = '''    # A checkpoint loaded with a one-entry device map can retain
     # ``hf_device_map`` even though every parameter is on the single current
     # device. Transformers Trainer treats that metadata as model parallel and
     # silently switches to DataParallel, shrinking the configured batch. Clear
@@ -18,4 +22,4 @@ new='''    # A checkpoint loaded with a one-entry device map can retain
     if model_args.print_param_status and int(os.getenv("LOCAL_RANK", "0")) == 0:
 '''
 if old not in s: raise SystemExit('target missing')
-p.write_text(s.replace(old,new,1))
+p.write_text(s.replace(old, new, 1))

@@ -19,7 +19,8 @@ case "$phase" in
     ;;
   *) exit 2 ;;
 esac
-python_path="/home/hulc/.local/share/mamba/envs/$environment/bin/python"
+# 新机器上 mamba/conda 路径不同时,用 BADLLM_PYTHON / BADLLM_UV 覆盖。
+python_path="${BADLLM_PYTHON:-/home/hulc/.local/share/mamba/envs/$environment/bin/python}"
 if [ ! -x "$python_path" ]; then
     micromamba create -y -n "$environment" -c conda-forge python=3.11 pip uv
 fi
@@ -36,7 +37,7 @@ if [ ! -d "$checkout/.git" ]; then
     git -C "$checkout" checkout --detach FETCH_HEAD
 fi
 test "$(git -C "$checkout" rev-parse HEAD)" = "$commit"
-uv_path="/home/hulc/.local/share/mamba/envs/$environment/bin/uv"
+uv_path="${BADLLM_UV:-/home/hulc/.local/share/mamba/envs/$environment/bin/uv}"
 if [ "$phase" = pt ]; then
     "$uv_path" pip install --python "$python_path" -c "$constraints" \
         -e "$checkout" 'trl==0.24.0' tensorboard 'setuptools==79.0.1'
