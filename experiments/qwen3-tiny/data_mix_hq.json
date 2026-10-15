@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "status": "2b_high_quality_mix",
+  "seed": 42,
+  "total_train_tokens": 2000000000,
+  "eval_max_tokens_per_source": 500000,
+  "rationale": "Scaling-law reset: 114M params trained on 17B bulk-web-heavy tokens plateaued at loss 2.92 with no coherence gain. Rebuild the diet from the highest-quality documents already prepared (pt-3b-v4 + pt-3b-v5-reasoning exports, ~6B tokens pool): encyclopedic facts, educational web, synthetic textbook/QA text dominate; bulk web reduced to a scorer-selected top slice. Train 2 epochs (4B effective) from random init.",
+  "sources": [
+    {"name": "finewiki_zh", "tokens": 340000000, "share": "encyclopedic facts zh"},
+    {"name": "fineweb_edu_dedup", "tokens": 380000000, "share": "educational web en (FineWeb-Edu tier)"},
+    {"name": "ultrafineweb_l3_zh_qa", "tokens": 220000000, "share": "synthetic zh QA/explanations"},
+    {"name": "ultrafineweb_l3_zh_multistyle", "tokens": 210000000, "share": "synthetic zh multi-style exposition"},
+    {"name": "cosmopedia_v2", "tokens": 150000000, "share": "LLM-generated textbook/stories (capped by pool size)"},
+    {"name": "finewiki_en", "tokens": 140000000, "share": "encyclopedic facts en"},
+    {"name": "ultradata_math_l2", "tokens": 140000000, "share": "math textbook tier L2"},
+    {"name": "ultradata_math_l3", "tokens": 140000000, "share": "math exercises synthetic tier L3"},
+    {"name": "ultradata_code_l2", "tokens": 120000000, "share": "code tier L2"},
+    {"name": "ultradata_code_l3", "tokens": 50000000, "share": "code tier L3"},
+    {"name": "ultrafineweb_zh_replay", "tokens": 50000000, "share": "bulk zh web, scorer top slice"},
+    {"name": "ultrafineweb_zh_fresh", "tokens": 50000000, "share": "bulk zh web, scorer top slice"}
+  ],
+  "notes": [
+    "cosmopedia_v2 pool is only ~150M tokens (v4 quota); if more is wanted, extend the local raw pool and re-run build_pretrain_v3 with a bigger cosmopedia quota first.",
+    "The two ultrafineweb_zh entries map to distinct prepared source names (replay in pt-3b-v4, fresh in pt-3b-v5-reasoning); their combined 100M is the only bulk-web slice.",
+    "Selection caps each source at its available tokens; the manifest records every cap."
+  ]
+}
